@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Aventura de Maya na Internet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .story-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .story-text {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .interactive-element {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .interactive-element:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .website-simulation {
+            border: 3px solid #4a90e2;
+            border-radius: 10px;
+            background: white;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .browser-bar {
+            background: #f0f0f0;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .url-bar {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 5px 15px;
+            flex-grow: 1;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        .news-site {
+            padding: 20px;
+        }
+
+        .news-header {
+            background: #1a73e8;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+        }
+
+        .news-article {
+            border-left: 4px solid #ff6b6b;
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+
+        .learning-site {
+            padding: 20px;
+            background: linear-gradient(to bottom, #e8f5e8, #f0fff0);
+        }
+
+        .lesson-box {
+            background: white;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .email-client {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .email-header {
+            background: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .character-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .achievement {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 A Aventura de Maya na Internet</h1>
+            <p>Uma jornada interativa pelos diferentes tipos de páginas web</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <!-- Introdução -->
+        <div id="intro" class="story-section fade-in">
+            <div class="story-text">
+                <div class="character-image">👩‍💻</div>
+                <strong>Maya</strong> é uma estudante curiosa de 14 anos que acabou de ganhar seu primeiro computador! 
+                Hoje ela descobriu algo estranho: todos os sites da internet parecem estar com problemas técnicos, 
+                e apenas ela pode ajudar a resolver visitando diferentes tipos de páginas web.
+                <br><br>
+                Uma mensagem misteriosa aparece em sua tela: <em>"Maya, precisamos da sua ajuda! 
+                Três portais importantes da internet estão com defeito. Você precisa visitá-los e completar 
+                missões específicas para restaurar a conexão global!"</em>
+            </div>
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="startAdventure()">
+                    🚀 Começar a Aventura
+                </button>
+            </div>
+        </div>
+
+        <!-- Escolha do primeiro site -->
+        <div id="choice1" class="story-section hidden">
+            <div class="story-text">
+                Maya olha para a tela e vê três portais brilhando. Ela precisa escolher por onde começar sua missão:
+            </div>
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="visitNewsPortal()">
+                    📰 Portal de Notícias<br>
+                    <small>Descobrir informações importantes</small>
+                </button>
+                <button class="interactive-element" onclick="visitLearningPlatform()">
+                    🎓 Plataforma de Aprendizado<br>
+                    <small>Adquirir novos conhecimentos</small>
+                </button>
+                <button class="interactive-element" onclick="visitEmail()">
+                    📧 Cliente de Email<br>
+                    <small>Comunicar com os amigos</small>
+                </button>
+            </div>
+        </div>
+
+        <!-- Portal de Notícias -->
+        <div id="newsPortal" class="story-section hidden">
+            <div class="story-text">
+                Maya clica no portal de notícias e é transportada para um site jornalístico:
+            </div>
+            
+            <div class="website-simulation">
+                <div class="browser-bar">
+                    <span>🔒</span>
+                    <div class="url-bar">https://www.noticiasmundo.com.br</div>
+                </div>
+                <div class="news-site">
+                    <div class="news-header">
+                        <h2>📰 Notícias do Mundo</h2>
+                        <p>Sua fonte confiável de informação</p>
+                    </div>
+                    
+                    <div class="news-article">
+                        <h3>🔬 Cientistas Descobrem Nova Tecnologia de Internet Quântica</h3>
+                        <p><small>Por: Redação - Hoje às 14:30</small></p>
+                        <p>Uma equipe internacional de cientistas anunciou hoje uma descoberta revolucionária 
+                        que pode tornar a internet 1000 vezes mais rápida...</p>
+                    </div>
+                    
+                    <div class="news-article">
+                        <h3>🌱 Projeto de Sustentabilidade Digital Ganha Prêmio Mundial</h3>
+                        <p><small>Por: Ana Silva - Ontem às 09:15</small></p>
+                        <p>Iniciativa brasileira que reduz o consumo de energia dos servidores recebe 
+                        reconhecimento internacional...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-text">
+                Maya percebe que precisa encontrar uma notícia específica sobre "códigos de segurança" 
+                para desbloquear o próximo nível. Qual artigo ela deveria investigar mais?
+            </div>
+            
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="solveNewsQuest()">
+                    🔍 Investigar a Tecnologia Quântica
+                </button>
+                <button class="interactive-element" onclick="wrongChoice('news')">
+                    🌱 Ler sobre Sustentabilidade
+                </button>
+            </div>
+        </div>
+
+        <!-- Plataforma de Aprendizado -->
+        <div id="learningPlatform" class="story-section hidden">
+            <div class="story-text">
+                Maya acessa a plataforma de aprendizado online:
+            </div>
+            
+            <div class="website-simulation">
+                <div class="browser-bar">
+                    <span>🔒</span>
+                    <div class="url-bar">https://www.aprenderdigital.edu.br</div>
+                </div>
+                <div class="learning-site">
+                    <h2>🎓 Aprender Digital</h2>
+                    <p>Transformando conhecimento em poder!</p>
+                    
+                    <div class="lesson-box">
+                        <h3>💻 Curso: Segurança na Internet</h3>
+                        <p><strong>Lição atual:</strong> Como criar senhas seguras</p>
+                        <p>Uma senha segura deve ter pelo menos 8 caracteres, incluir letras maiúsculas, 
+                        minúsculas, números e símbolos especiais.</p>
+                        <p><strong>Exemplo:</strong> M@y@2024$egur@</p>
+                    </div>
+                    
+                    <div class="lesson-box">
+                        <h3>🌐 Curso: Navegação Responsável</h3>
+                        <p><strong>Próxima lição:</strong> Identificando sites confiáveis</p>
+                        <p>Sempre verifique se o site possui certificado SSL (https://) 
+                        e se as informações são de fontes credíveis.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-text">
+                Para completar esta missão, Maya precisa demonstrar que aprendeu sobre segurança. 
+                Qual seria a melhor senha para sua conta?
+            </div>
+            
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="solveLearningQuest()">
+                    🔐 M@y@Aventur@2024!
+                </button>
+                <button class="interactive-element" onclick="wrongChoice('learning')">
+                    🔓 maya123
+                </button>
+            </div>
+        </div>
+
+        <!-- Cliente de Email -->
+        <div id="emailClient" class="story-section hidden">
+            <div class="story-text">
+                Maya abre seu cliente de email e encontra mensagens importantes:
+            </div>
+            
+            <div class="website-simulation">
+                <div class="browser-bar">
+                    <span>🔒</span>
+                    <div class="url-bar">https://mail.conectados.com</div>
+                </div>
+                <div class="email-client">
+                    <div class="email-header">
+                        📧 Email - Caixa de Entrada
+                    </div>
+                    
+                    <div style="border-bottom: 1px solid #ddd; padding: 10px; background: #fff3cd;">
+                        <strong>De:</strong> pedro@escola.com<br>
+                        <strong>Para:</strong> maya@conectados.com<br>
+                        <strong>Assunto:</strong> 🚨 URGENTE: Código de emergência!<br>
+                        <strong>Data:</strong> Hoje, 15:45<br><br>
+                        
+                        Oi Maya! 😊<br><br>
+                        
+                        Descobri o código secreto que você precisa para completar a missão da internet! 
+                        É o número formado pelo ano atual + 100. Mas cuidado, tem pessoas más 
+                        tentando interceptar nossa comunicação!<br><br>
+                        
+                        Use este código no portal principal quando terminar todas as missões.<br><br>
+                        
+                        Boa sorte!<br>
+                        Pedro 🤝
+                    </div>
+                    
+                    <div style="border-bottom: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                        <strong>De:</strong> spam@oferta.fake<br>
+                        <strong>Assunto:</strong> GANHE MILHÕES CLICANDO AQUI!!!<br>
+                        <small style="color: #666;">Este email foi marcado como SPAM</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-text">
+                Maya precisa identificar qual email contém informações confiáveis. Como ela deve proceder?
+            </div>
+            
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="solveEmailQuest()">
+                    ✅ Confiar no email do Pedro (amigo conhecido)
+                </button>
+                <button class="interactive-element" onclick="wrongChoice('email')">
+                    ❌ Clicar no email de "ganhar milhões"
+                </button>
+            </div>
+        </div>
+
+        <!-- Missão Final -->
+        <div id="finalMission" class="story-section hidden">
+            <div class="story-text">
+                <div class="achievement">🏆 Parabéns! Maya completou todas as missões!</div>
+                <br>
+                Agora Maya precisa usar tudo que aprendeu para inserir o código final e restaurar a internet global. 
+                Pedro disse que o código é o ano atual + 100.
+                <br><br>
+                <strong>Qual é o código correto?</strong>
+            </div>
+            
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="finalSolution()">
+                    🔢 2125 (2025 + 100)
+                </button>
+                <button class="interactive-element" onclick="wrongChoice('final')">
+                    🔢 2024
+                </button>
+                <button class="interactive-element" onclick="wrongChoice('final')">
+                    🔢 1900
+                </button>
+            </div>
+        </div>
+
+        <!-- Final da História -->
+        <div id="victory" class="story-section hidden">
+            <div class="story-text" style="text-align: center;">
+                <div class="achievement" style="font-size: 1.5rem; padding: 30px;">
+                    🎉 MISSÃO CUMPRIDA! 🎉
+                </div>
+                <br>
+                <div class="character-image" style="font-size: 3rem; margin: 20px auto;">🌟</div>
+                <br>
+                <strong>Maya salvou a internet!</strong><br><br>
+                
+                Durante sua aventura, ela aprendeu sobre:
+                <ul style="text-align: left; max-width: 500px; margin: 20px auto;">
+                    <li>📰 <strong>Portais de Notícias:</strong> Como identificar informações confiáveis</li>
+                    <li>🎓 <strong>Plataformas de Aprendizado:</strong> A importância da educação digital</li>
+                    <li>📧 <strong>Comunicação Digital:</strong> Como se comunicar com segurança</li>
+                    <li>🔐 <strong>Segurança Online:</strong> Proteção de dados pessoais</li>
+                </ul>
+                
+                <br>A internet foi restaurada e agora Maya é uma verdadeira exploradora digital! 🚀
+            </div>
+            
+            <div class="choice-grid">
+                <button class="interactive-element" onclick="restartAdventure()">
+                    🔄 Jogar Novamente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        let completedMissions = [];
+
+        function updateProgress() {
+            progress += 25;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.story-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Mostrar a seção desejada
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.remove('hidden');
+            targetSection.classList.add('fade-in');
+            
+            // Scroll suave para a seção
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startAdventure() {
+            updateProgress();
+            showSection('choice1');
+        }
+
+        function visitNewsPortal() {
+            showSection('newsPortal');
+        }
+
+        function visitLearningPlatform() {
+            showSection('learningPlatform');
+        }
+
+        function visitEmail() {
+            showSection('emailClient');
+        }
+
+        function solveNewsQuest() {
+            updateProgress();
+            completedMissions.push('news');
+            alert('🎉 Excelente! Maya descobriu que a tecnologia quântica contém códigos de segurança importantes!');
+            checkAllMissionsComplete();
+        }
+
+        function solveLearningQuest() {
+            updateProgress();
+            completedMissions.push('learning');
+            alert('🎉 Perfeito! Maya criou uma senha super segura seguindo todas as regras de segurança!');
+            checkAllMissionsComplete();
+        }
+
+        function solveEmailQuest() {
+            updateProgress();
+            completedMissions.push('email');
+            alert('🎉 Muito bem! Maya foi esperta ao confiar apenas em emails de remetentes conhecidos!');
+            checkAllMissionsComplete();
+        }
+
+        function wrongChoice(section) {
+            const messages = {
+                'news': 'Ops! Essa notícia não contém as informações que Maya precisa. Tente novamente!',
+                'learning': 'Cuidado! Essa senha é muito fraca e fácil de descobrir. Escolha uma opção mais segura!',
+                'email': 'Atenção! Nunca clique em emails suspeitos ou de remetentes desconhecidos!',
+                'final': 'Hmm, esse não é o código correto. Lembre-se da dica do Pedro!'
+            };
+            alert('⚠️ ' + messages[section]);
+        }
+
+        function checkAllMissionsComplete() {
+            if (completedMissions.length === 3) {
+                setTimeout(() => {
+                    showSection('finalMission');
+                }, 1500);
+            } else {
+                // Volta para escolher outro site
+                setTimeout(() => {
+                    showSection('choice1');
+                }, 2000);
+            }
+        }
+
+        function finalSolution() {
+            updateProgress();
+            setTimeout(() => {
+                showSection('victory');
+            }, 1000);
+        }
+
+        function restartAdventure() {
+            progress = 0;
+            completedMissions = [];
+            document.getElementById('progressBar').style.width = '0%';
+            showSection('intro');
+        }
+    </script>
+</body>
+</html>
