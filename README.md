@@ -1,4 +1,4 @@
-# 🛡️ Maya Cyber Quest
+#  Maya Cyber Quest
 
 Jogo educativo de cibersegurança para crianças de 8 a 14 anos.
 
