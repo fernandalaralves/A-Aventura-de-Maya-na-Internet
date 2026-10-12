@@ -1,4 +1,6 @@
 import './styles/main.css';
+import { BaseComponent, defineComponent } from './components/base/BaseComponent.js';
+import { html } from './utils/html.js';
 
 const appRoot = document.querySelector('app-root');
 
