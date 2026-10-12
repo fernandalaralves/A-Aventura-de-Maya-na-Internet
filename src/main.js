@@ -9,7 +9,7 @@ if (!appRoot) {
     <div class="container">
       <header style="text-align:center; color:white; margin-bottom:2rem;">
         <h1 style="font-size:2.5rem; text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:0.5rem;">
-          🛡️ Maya Cyber Quest
+           Maya Cyber Quest
         </h1>
         <p style="opacity:0.9; font-size:1.1rem;">
           Uma aventura pela segurança na internet
@@ -30,9 +30,7 @@ if (!appRoot) {
   renderIntro();
 }
 
-// =========================================================
-// TELAS
-// =========================================================
+
 
 function renderIntro() {
   const screen = document.getElementById('screen');
@@ -71,7 +69,7 @@ function renderIntro() {
         cursor: pointer;
         transition: all 0.2s;
         box-shadow: 0 4px 12px rgba(99,102,241,0.3);
-      ">🚀 Começar Aventura</button>
+      "> Começar Aventura</button>
     </div>
   `;
 
@@ -81,7 +79,7 @@ function renderIntro() {
 function renderMissionSelect() {
   const screen = document.getElementById('screen');
   screen.innerHTML = `
-    <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">🗺️ Escolha sua missão</h2>
+    <h2 style="font-size:1.5rem; margin-bottom:0.5rem;"> Escolha sua missão</h2>
     <p style="color:#6b7280; margin-bottom:1.5rem;">
       Três portais estão esperando por você.
     </p>
