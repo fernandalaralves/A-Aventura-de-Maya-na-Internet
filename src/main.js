@@ -94,12 +94,12 @@ function renderMissionSelect() {
   `;
 
   screen.querySelectorAll('[data-mission]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.mission;
-      console.log('[MCQ] Missão escolhida:', id);
-      alert(`Missão "${id}" escolhida! Em breve vamos implementá-la.`);
-    });
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.mission;
+    console.log('[MCQ] Missão escolhida:', id);
+    renderComingSoon(id);
   });
+ });
 }
 
 function missionCard(icon, title, description, id) {
@@ -127,5 +127,44 @@ function missionCard(icon, title, description, id) {
     </button>
   `;
 }
+function renderComingSoon(missionId) {
+  const screen = document.getElementById('screen');
 
-console.log('[MCQ] Jogo inicializado 🚀');
+  const titles = {
+    news: '📰 Portal de Notícias',
+    learning: '🎓 Plataforma Educacional',
+    email: '📧 Cliente de Email',
+  };
+
+  screen.innerHTML = `
+    <h2 style="font-size:1.5rem; margin-bottom:1rem;">
+      ${titles[missionId] ?? 'Missão'}
+    </h2>
+
+    <div style="
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    ">
+      <p style="margin:0; font-weight:600;">🚧 Em construção</p>
+      <p style="margin:0.5rem 0 0; color:#6b7280;">
+        Esta missão ainda está sendo implementada. Em breve você poderá jogá-la!
+      </p>
+    </div>
+
+    <button id="btn-back" style="
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    ">⬅ Voltar às missões</button>
+  `;
+
+  document.getElementById('btn-back').addEventListener('click', renderMissionSelect);
+}
