@@ -168,3 +168,8 @@ function renderComingSoon(missionId) {
 
   document.getElementById('btn-back').addEventListener('click', renderMissionSelect);
 }
+if (import.meta.env.DEV) {
+  setTimeout(() => {
+    myUndefinedFunction();
+  }, 1000);
+}
